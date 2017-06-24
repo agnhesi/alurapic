@@ -14,17 +14,13 @@
     data() {
       return {
         titulo: 'Alurapic',
-        fotos: [
-          {
-            url: 'http://portaldodog.com.br/cachorros/wp-content/uploads/2015/06/husky-siberiano-10-500x375.jpg',
-            titulo: 'cachorro'
-          },
-          {
-            url: 'http://portaldodog.com.br/cachorros/wp-content/uploads/2015/06/husky-siberiano-10-500x375.jpg',
-            titulo: 'cachorrao'
-          }
-        ]
+        fotos: []
       }
+    },
+    created() {
+      this.$http.get('http://localhost:3000/v1/fotos')
+      .then(res => res.json())
+      .then(fotos => this.fotos = fotos, err => console.log(err));
     }
   }
 </script>
