@@ -1,51 +1,55 @@
 <template>
-    <button :class="estiloDoBotao" :type="tipo" estilo="perigo" @click="disparaAcao()">{{rotulo}}</button>
+    <button @click="disparaAcao()" class="botao" :class="estiloDoBotao" :type="tipo">{{ rotulo }}</button>
 </template>
 
 <script>
 
 export default {
 
-   props: {
-            tipo: {
-                required: true,
-                type: String
-            },
-            rotulo: {
-                required: true,
-                type: String
-            },
-            confirmacao: Boolean,
-            estilo: String
-        },
-   methods: {
+    props: {
 
-       disparaAcao() {
-           console.log(typeof(this.confirmacao));
-           if(this.confirmacao) {
-               if(confirm('Confirma operacao?')) {
+        tipo: {
+            required: true, 
+            type: String
+        },
+
+        rotulo: {
+            required: true, 
+            type: String
+        }, 
+
+        confirmacao: Boolean,
+        estilo: String
+
+    },
+
+    methods: {
+
+        disparaAcao() {
+
+            if(this.confirmacao) {
+                if(confirm('Confirma operação?')) {
                     this.$emit('botaoAtivado');
                 }
                 return;
-           }
-           this.$emit('botaoAtivado');
-       }
-   },
+            }
+            this.$emit('botaoAtivado');
+        }
+    },
 
-   computed: {
+    computed: {
 
-       estiloDoBotao() {
+        estiloDoBotao() {
 
-           // se o valor é padrão ou não passou nada para estilo
-           if(this.estilo == 'padrao') return 'botao botao-padrao';
+            if(this.estilo == 'padrao' || !this.estilo) return 'botao-padrao';
+            if(this.estilo == 'perigo') return 'botao-perigo';
+        }
 
-           if(this.estilo == 'perigo') return 'botao botao-perigo';
-       }
-   }
+    }
 }
-</script>    
+</script>
 
-<style scoped>
+<style>
     .botao {
         display: inline-block;
         padding: 10px;
@@ -63,5 +67,4 @@ export default {
         background: darkcyan;
         color: white;
     }
-
 </style>
